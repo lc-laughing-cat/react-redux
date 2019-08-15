@@ -4,7 +4,11 @@ import {
   applyMiddleware
 } from 'redux';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import tasksReducer from '../reducers/tasks';
+
+const middleWares = [thunk, logger];
 
 // historyはsrc/indexで渡す
 export default function createStore (history) {
@@ -15,7 +19,8 @@ export default function createStore (history) {
       router: routerReducer
     }),
     applyMiddleware(
-      routerMiddleware(history)
+      routerMiddleware(history),
+      ...middleWares
     )
   );
 }
